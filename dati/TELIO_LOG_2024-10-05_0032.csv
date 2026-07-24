@@ -1,0 +1,8 @@
+﻿STATO;LAVORI;NOME_LAVORO;DATA_DI_STAMPA;LARGHEZZA_cm;ALTEZZA_cm;COPIE;AREA_TOTALE_mq;STAMPANTE;SUPPORTO;RISOLUZIONE;TEMPO_RIP;TEMPO_STAMPA;INCHIOSTO_UTILIZZATO_ml;INCHIOSTRO_TOTALE;COSTO_INCHIOSTRO;NUMERO_ORDINE;SCOIETA;CLIENTE;NOTE;PERSONALIZZATO_01;PERSONALIZZATO_02;DUE_PRINT;DUE_DATE;ID_TAGLIO;
+OK;Stellantis_12x3.JPG;;04/10/2024 13:29:19;1.180,00;278,00;2;65,6500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:42;01:10:39;;0,00;€0,00;;;;;;;0;;;
+ERROR;Stellantis_6x3.JPG;;04/10/2024 14:42:03;568,00;280,00;28;445,3500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:25;00:00:41;;0,00;€0,00;;;;;;;0;;;
+OK;Stellantis_6x3.JPG;;04/10/2024 14:45:23;568,00;280,00;28;445,3500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:25;09:38:41;;0,00;€0,00;;;;;;;0;;;
+OK;Stellantis_6x6.JPG;;04/10/2024 22:25:40;568,00;570,00;2;64,8000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:50;09:38:41;;0,00;€0,00;;;;;;;0;;;
+OK;Lingua+_6x3.JPG;;04/10/2024 23:33:25;568,00;280,00;2;31,8500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:21;09:38:41;;0,00;€0,00;;;;;;;0;;;
+OK;Elettromobil_6x3.JPG;;05/10/2024 00:06:50;568,00;280,00;1;15,9500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:22;09:38:41;;0,00;€0,00;;;;;;;0;;;
+OK;IlCentesimo_140x200_2.JPG;;04/10/2024 13:25:33;131,00;194,05;28;71,2000;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:14;01:18:59;;0,00;€0,00;;;;;;;0;;;

@@ -33,88 +33,33 @@ st.title("🖨️ Master Print Control - Industria 4.0 (Enterprise)")
 st.markdown("Cruscotto direzionale avanzato per il controllo dei costi, consumi, trend temporali e gestione linee FLORA F1 4T, Papyrus e Liyu.")
 st.divider()
 
-# --- SIDEBAR: MODALITÀ CARICAMENTO DATI (NAS o FILE UPLOAD) ---
-st.sidebar.header("📁 1. Sorgente Dati")
+# --- LETTURA AUTOMATICA DALLA CARTELLA DATI ---
+st.sidebar.header("📁 1. Sorgente Dati (Automatica)")
 
-# Opzione per caricamento manuale file (Drag & Drop da remoto)
-uploaded_files = st.sidebar.file_uploader(
-    "Carica i file CSV (da remoto / casa):", 
-    type=['csv'], 
-    accept_multiple_files=True,
-    help="Trascina qui i file di log scaricati dal NAS per analizzarli da qualsiasi posto."
-)
+cartella_dati = "dati"
+tutti_i_dataframe = []
 
-df = pd.DataFrame()
-
-if uploaded_files:
-    # Se l'utente ha caricato manualmente i file, usiamo quelli
-    tutti_i_dataframe = []
-    for uploaded_file in uploaded_files:
-        try:
-            df_temp = pd.read_csv(uploaded_file, sep=';', encoding='utf-8', on_bad_lines='skip')
-            if not df_temp.empty:
-                tutti_i_dataframe.append(df_temp)
-        except Exception:
+if os.path.exists(cartella_dati):
+    for file in os.listdir(cartella_dati):
+        if file.lower().endswith('.csv'):
+            file_path = os.path.join(cartella_dati, file)
             try:
-                uploaded_file.seek(0)
-                df_temp = pd.read_csv(uploaded_file, sep=',', encoding='utf-8', on_bad_lines='skip')
+                df_temp = pd.read_csv(file_path, sep=';', encoding='utf-8', on_bad_lines='skip')
                 if not df_temp.empty:
                     tutti_i_dataframe.append(df_temp)
             except Exception:
-                continue
-    if tutti_i_dataframe:
-        df = pd.concat(tutti_i_dataframe, ignore_index=True)
-    st.sidebar.success(f"Caricati {len(uploaded_files)} file con successo!")
+                try:
+                    df_temp = pd.read_csv(file_path, sep=',', encoding='utf-8', on_bad_lines='skip')
+                    if not df_temp.empty:
+                        tutti_i_dataframe.append(df_temp)
+                except Exception:
+                    continue
+
+if tutti_i_dataframe:
+    df = pd.concat(tutti_i_dataframe, ignore_index=True)
+    st.sidebar.success(f"Caricati {len(tutti_i_dataframe)} file di log in automatico!")
 else:
-    # Altrimenti proviamo a leggere dalla cartella NAS locale
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("**Navigazione Cartelle (NAS Locale):**")
-    if 'current_dir' not in st.session_state:
-        st.session_state.current_dir = "/Volumes" if os.path.exists("/Volumes") else os.path.expanduser("~")
-
-    st.sidebar.code(st.session_state.current_dir)
-
-    if st.sidebar.button("⬆️ Torna alla cartella superiore", use_container_width=True):
-        st.session_state.current_dir = os.path.dirname(st.session_state.current_dir)
-        st.rerun()
-
-    try:
-        cartelle_disponibili = [d for d in os.listdir(st.session_state.current_dir) if os.path.isdir(os.path.join(st.session_state.current_dir, d)) and not d.startswith('.')]
-        cartelle_disponibili.sort()
-        
-        scelta_cartella = st.sidebar.selectbox("Entra in una cartella:", options=["-- Seleziona cartella da aprire --"] + cartelle_disponibili)
-        
-        if scelta_cartella != "-- Seleziona cartella da aprire --":
-            st.session_state.current_dir = os.path.join(st.session_state.current_dir, scelta_cartella)
-            st.rerun()
-    except Exception as e:
-        st.sidebar.error(f"Errore lettura cartella: {e}")
-
-    percorso_remoto = st.session_state.current_dir
-
-    @st.cache_data(show_spinner=False)
-    def load_all_logs(base_dir):
-        tutti_i_dataframe = []
-        target_dir = base_dir if os.path.exists(base_dir) else "."
-        
-        for root, dirs, files in os.walk(target_dir):
-            for file in files:
-                if file.lower().endswith('.csv'):
-                    file_path = os.path.join(root, file)
-                    try:
-                        df_temp = pd.read_csv(file_path, sep=';', encoding='utf-8', on_bad_lines='skip')
-                        if not df_temp.empty:
-                            tutti_i_dataframe.append(df_temp)
-                    except Exception:
-                        continue
-                        
-        if tutti_i_dataframe:
-            return pd.concat(tutti_i_dataframe, ignore_index=True)
-        else:
-            return pd.DataFrame()
-
-    with st.spinner("⏳ Lettura e indicizzazione dei log di stampa in corso..."):
-        df = load_all_logs(percorso_remoto)
+    df = pd.DataFrame()
 
 if not df.empty:
     # Pulizia e formattazione dati rapida
@@ -294,10 +239,10 @@ if not df.empty:
         col_g1, col_g2 = st.columns(2)
         with col_g1:
             fig_costi = px.bar(df, x='STAMPANTE', y='Costo_Produzione_Totale', color='STAMPANTE', title="Costo di Produzione per Macchina (€)", text_auto='.2f')
-            st.plotly_chart(fig_costi, width='stretch')
+            st.plotly_chart(fig_costi, use_container_width=True)
         with col_g2:
             fig_sup = px.pie(df, names='SUPPORTO', values='AREA_TOTALE_mq', hole=0.4, title="Ripartizione Superficie per Supporto")
-            st.plotly_chart(fig_sup, width='stretch')
+            st.plotly_chart(fig_sup, use_container_width=True)
 
         st.divider()
         st.subheader("📈 Trend Temporale della Produzione (Mq per Mese)")
@@ -305,7 +250,7 @@ if not df.empty:
             df_trend = df.groupby(['ANNO', 'MESE_NUM', 'MESE'], as_index=False)['AREA_TOTALE_mq'].sum().sort_values(['ANNO', 'MESE_NUM'])
             if not df_trend.empty:
                 fig_trend = px.line(df_trend, x='MESE', y='AREA_TOTALE_mq', color='ANNO', markers=True, title="Andamento Mensile Metri Quadri Stampati", labels={'MESE': 'Mese', 'AREA_TOTALE_mq': 'Superficie Totale (mq)'})
-                st.plotly_chart(fig_trend, width='stretch')
+                st.plotly_chart(fig_trend, use_container_width=True)
             else:
                 st.info("Dati temporali insufficienti per generare il trend mensile.")
 
@@ -388,7 +333,7 @@ if not df.empty:
 
     with tab_registro:
         colonne_mostrate = [c for c in ['DATA_DI_STAMPA', 'STAMPANTE', 'LAVORI', 'SUPPORTO', 'AREA_TOTALE_mq', 'Costo_Carta_Totale', 'Costo_Inchiostro_Totale', 'Costo_Produzione_Totale', 'STATO'] if c in df.columns]
-        st.dataframe(df[colonne_mostrate], width='stretch')
+        st.dataframe(df[colonne_mostrate], use_container_width=True)
         
         col_down1, col_down2 = st.columns(2)
         with col_down1:
@@ -412,13 +357,13 @@ if not df.empty:
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
 else:
-    st.warning("👈 Carica i file CSV tramite il pulsante nella barra laterale oppure naviga fino alla cartella dei log del NAS.")
+    st.warning("⚠️ Nessun file trovato nella cartella dati locale. Esegui la sincronizzazione dal NAS.")
 
 # --- FOOTER & COPYRIGHT ---
 st.sidebar.markdown("---")
 st.sidebar.markdown(
     "<div style='text-align: center; color: #6b7280; font-size: 12px;'>"
-    "© 2026 <b>Il Tuo Nome e Cognome</b><br>Tutti i diritti riservati."
+    "© 2026 Master Print Control<br>Tutti i diritti riservati."
     "</div>",
     unsafe_allow_html=True
 )

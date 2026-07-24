@@ -1,0 +1,15 @@
+﻿STATO;LAVORI;NOME_LAVORO;DATA_DI_STAMPA;LARGHEZZA_cm;ALTEZZA_cm;COPIE;AREA_TOTALE_mq;STAMPANTE;SUPPORTO;RISOLUZIONE;TEMPO_RIP;TEMPO_STAMPA;INCHIOSTO_UTILIZZATO_ml;INCHIOSTRO_TOTALE;COSTO_INCHIOSTRO;NUMERO_ORDINE;SCOIETA;CLIENTE;NOTE;PERSONALIZZATO_01;PERSONALIZZATO_02;DUE_PRINT;DUE_DATE;ID_TAGLIO;
+ERROR;Conad_6x3.JPG;;31/07/2024 10:58:05;568,00;280,00;12;190,8500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:20;00:00:00;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x3.JPG;;31/07/2024 11:15:30;568,00;280,00;12;190,8500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:20;02:42:15;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x3.JPG;;31/07/2024 14:10:03;568,00;280,00;4;63,6500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:20;00:32:23;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x6.JPG;;31/07/2024 14:50:09;568,00;565,00;2;64,2000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:37;00:31:52;;0,00;€0,00;;;;;;;0;;;
+ERROR;Conad_12x3.JPG;;31/07/2024 15:32:08;1.180,00;278,00;3;98,4500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x1200;00:01:01;00:11:32;;0,00;€0,00;;;;;;;0;;;
+OK;Lingua+_6x3.JPG;;31/07/2024 10:06:15;568,00;280,00;2;31,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:30;00:48:12;;0,00;€0,00;;;;;;;0;;;
+OK;Eurospar_6x3_DoppioLogo.JPG;;31/07/2024 10:37:47;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:37;00:48:12;;0,00;€0,00;;;;;;;0;;;
+OK;Eurospar_6x3_PA1.JPG;;31/07/2024 11:15:24;568,00;280,00;2;31,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:36;01:55:39;;0,00;€0,00;;;;;;;0;;;
+OK;Eurospar_6x3_PA2.JPG;;31/07/2024 11:31:10;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:39;01:55:39;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x3.JPG;;31/07/2024 11:40:07;568,00;280,00;10;159,0500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:31;01:55:39;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x3~1.JPG;;31/07/2024 13:52:41;568,00;280,00;3;47,7500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:31;00:49:19;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x3.JPG;;31/07/2024 14:16:10;568,00;280,00;3;47,7500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:31;00:49:19;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_6x3.JPG;;31/07/2024 14:42:38;568,00;280,00;6;95,4500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:31;00:51:41;;0,00;€0,00;;;;;;;0;;;
+ERROR;Conad_6x3.JPG;;31/07/2024 15:48:53;568,00;280,00;26;413,5500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:31;00:02:36;;0,00;€0,00;;;;;;;0;;;

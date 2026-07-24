@@ -1,0 +1,17 @@
+﻿STATO;LAVORI;NOME_LAVORO;DATA_DI_STAMPA;LARGHEZZA_cm;ALTEZZA_cm;COPIE;AREA_TOTALE_mq;STAMPANTE;SUPPORTO;RISOLUZIONE;TEMPO_RIP;TEMPO_STAMPA;INCHIOSTO_UTILIZZATO_ml;INCHIOSTRO_TOTALE;COSTO_INCHIOSTRO;NUMERO_ORDINE;SCOIETA;CLIENTE;NOTE;PERSONALIZZATO_01;PERSONALIZZATO_02;DUE_PRINT;DUE_DATE;ID_TAGLIO;
+ERROR;PaghiPoco_12x3_PA.JPG;;28/06/2024 15:33:11;1.180,00;278,00;3;98,4500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:34;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;GED_6x6_Cim.667.JPG;;28/06/2024 17:16:19;568,00;570,00;1;32,4000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:45;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;GED_140x200_Ciim.432.JPG;;28/06/2024 17:49:55;131,00;194,00;1;2,5500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:13;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;GED_140x200_Ciim.1142.JPG;;28/06/2024 17:52:43;131,00;194,00;1;2,5500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:10;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;GED_140x200_Cim.433.JPG;;28/06/2024 17:55:30;131,00;194,00;2;5,1000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:09;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;GED_140x200_Cim.434.JPG;;28/06/2024 18:01:02;131,00;194,00;2;5,1000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:09;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;GED_140x200_Cim.864.JPG;;28/06/2024 18:07:28;131,00;194,00;2;5,1000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:09;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;ZooService_6x3.JPG;;28/06/2024 18:13:00;568,00;280,00;1;15,9500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:26;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;Mazzara_6x3.JPG;;28/06/2024 18:29:11;568,00;280,00;35;556,6500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:23;17:02:51;;0,00;€0,00;;;;;;;0;;;
+ERROR;Mazzara_6x3~1.JPG;;29/06/2024 08:53:05;568,00;280,00;14;222,7000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:23;04:46:42;;0,00;€0,00;;;;;;;0;;;
+ERROR;Mazzara_6x3.JPG;;29/06/2024 09:14:08;568,00;280,00;35;556,6500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:23;04:46:42;;0,00;€0,00;;;;;;;0;;;
+OK;GED_6x3_Cim.920-Cim.74.JPG;;29/06/2024 09:25:48;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:36;00:12:56;;0,00;€0,00;;;;;;;0;;;
+OK;Maniaci_300x70.JPG;;29/06/2024 09:41:47;370,00;200,00;1;7,4000;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:19;00:05:35;;0,00;€0,00;;;;;;;0;;;
+OK;Miceli_6x3_VenetaCucine.JPG;;29/06/2024 10:49:08;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:37;01:05:14;;0,00;€0,00;;;;;;;0;;;
+OK;Miceli_6x3.JPG;;29/06/2024 11:02:03;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:41;01:05:14;;0,00;€0,00;;;;;;;0;;;
+OK;Forum_12x3.JPG;;29/06/2024 11:18:44;1.180,00;278,00;1;32,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:51;01:05:14;;0,00;€0,00;;;;;;;0;;;

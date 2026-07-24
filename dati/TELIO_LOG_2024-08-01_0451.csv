@@ -1,0 +1,16 @@
+﻿STATO;LAVORI;NOME_LAVORO;DATA_DI_STAMPA;LARGHEZZA_cm;ALTEZZA_cm;COPIE;AREA_TOTALE_mq;STAMPANTE;SUPPORTO;RISOLUZIONE;TEMPO_RIP;TEMPO_STAMPA;INCHIOSTO_UTILIZZATO_ml;INCHIOSTRO_TOTALE;COSTO_INCHIOSTRO;NUMERO_ORDINE;SCOIETA;CLIENTE;NOTE;PERSONALIZZATO_01;PERSONALIZZATO_02;DUE_PRINT;DUE_DATE;ID_TAGLIO;
+OK;Conad_6x3.JPG;;31/07/2024 15:47:01;568,00;280,00;40;636,1500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:20;12:47:44;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_12x3.JPG;;01/08/2024 02:45:47;1.180,00;278,00;3;98,4500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:40;12:47:44;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_Caltagirone.JPG;;31/07/2024 16:04:57;568,00;280,00;2;31,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:55;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_Messina.JPG;;31/07/2024 16:34:36;568,00;280,00;2;31,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:42;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_CT_Besana.JPG;;31/07/2024 17:07:56;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:53;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_Misterb.JPG;;31/07/2024 17:24:37;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:46;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_SGiov_CT.JPG;;31/07/2024 17:41:22;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:54;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_Siracusa.JPG;;31/07/2024 17:58:02;568,00;280,00;5;79,5500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:44;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_100x140_A_Siracusa.JPG;;31/07/2024 19:21:29;135,05;95,00;2;2,6000;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:14;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_100x140_B_Siracusa.JPG;;31/07/2024 19:24:18;135,05;95,00;3;3,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:15;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_140x200_A_Siracusa.JPG;;31/07/2024 19:28:24;134,05;194,05;7;18,2000;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:16;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_140x200_B_Siracusa.JPG;;31/07/2024 19:47:53;134,05;194,05;7;18,2000;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:15;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;Conad_12x3.JPG;;31/07/2024 20:07:22;1.180,00;278,00;1;32,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:01:02;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_Marsala.JPG;;31/07/2024 20:43:06;568,00;280,00;2;31,8500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:41;06:52:18;;0,00;€0,00;;;;;;;0;;;
+OK;PaghiPoco_6x3_Trapani.JPG;;31/07/2024 21:17:44;568,00;280,00;6;95,4500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:39;06:52:18;;0,00;€0,00;;;;;;;0;;;

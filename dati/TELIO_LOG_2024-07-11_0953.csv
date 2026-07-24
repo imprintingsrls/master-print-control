@@ -1,0 +1,18 @@
+﻿STATO;LAVORI;NOME_LAVORO;DATA_DI_STAMPA;LARGHEZZA_cm;ALTEZZA_cm;COPIE;AREA_TOTALE_mq;STAMPANTE;SUPPORTO;RISOLUZIONE;TEMPO_RIP;TEMPO_STAMPA;INCHIOSTO_UTILIZZATO_ml;INCHIOSTRO_TOTALE;COSTO_INCHIOSTRO;NUMERO_ORDINE;SCOIETA;CLIENTE;NOTE;PERSONALIZZATO_01;PERSONALIZZATO_02;DUE_PRINT;DUE_DATE;ID_TAGLIO;
+OK;WIX_6x3.JPG;;10/07/2024 16:46:48;568,00;280,00;21;334,0000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:20;10:45:48;;0,00;€0,00;;;;;;;0;;;
+OK;AMG_100x140.JPG;;10/07/2024 21:33:21;131,00;95,00;70;87,1500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:07;10:45:48;;0,00;€0,00;;;;;;;0;;;
+OK;AMG_140x200.JPG;;11/07/2024 00:08:21;131,00;194,05;72;183,0000;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:13;10:45:48;;0,00;€0,00;;;;;;;0;;;
+OK;Wix_100x140.JPG;;11/07/2024 08:22:16;131,00;95,00;57;70,9500;DGen Papyrus G5;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:04;01:08:58;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA-TP_100x140_Studentessa.JPG;;10/07/2024 15:51:01;131,00;95,00;13;16,2000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:10;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_100x140_Estero.JPG;;10/07/2024 16:01:10;131,00;95,00;26;32,4000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:09;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_100x140_Nuoto.JPG;;10/07/2024 16:35:55;131,00;95,00;26;32,4000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:07;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_100x140_Ricerca.JPG;;10/07/2024 17:10:50;131,00;95,00;27;33,6000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:08;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_100x140_Studentessa.JPG;;10/07/2024 17:46:54;131,00;95,00;27;33,6000;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:10;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_6x3_TRAPANI.JPG;;10/07/2024 18:24:05;568,00;280,00;1;15,9500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:23;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_6x3_Nuoto.JPG;;10/07/2024 18:39:48;568,00;280,00;3;47,7500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:23;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_6x3_Ricerca.JPG;;10/07/2024 19:30:49;568,00;280,00;3;47,7500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:23;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_6x3_Studentessa.JPG;;10/07/2024 20:20:56;568,00;280,00;4;63,6500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:24;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;UniPA_6x3_Estero.JPG;;10/07/2024 21:29:29;568,00;280,00;4;63,6500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:24;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;Siciltermica_6x3.JPG;;10/07/2024 22:36:48;568,00;280,00;10;159,0500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:22;10:58:12;;0,00;€0,00;;;;;;;0;;;
+OK;Essepiauto_6x3_Golf.JPG;;11/07/2024 01:25:17;568,00;280,00;5;79,5500;DGen Papyrus G5 - 1;BB Inchiostrazione elevata [Solutioncare];720x600;00:00:27;10:58:12;;0,00;€0,00;;;;;;;0;;;
+ERROR;Facella_6x3_LT-1.JPG;;11/07/2024 08:13:20;568,00;280,00;1;15,9500;DGen Papyrus G5 - 2;2 pass blueback [Double CM profiles];720x1200;00:00:27;00:18:14;;0,00;€0,00;;;;;;;0;;;
