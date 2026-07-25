@@ -23,20 +23,19 @@ st.markdown("""
     /* Intestazione principale moderna e colorata */
     .main-header {
         background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 25px;
+        padding: 22px;
         border-radius: 12px;
         color: white;
-        margin-bottom: 25px;
         box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
     }
     .main-header h1 {
         margin: 0;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 700;
     }
     .main-header p {
-        margin: 8px 0 0 0;
-        font-size: 14px;
+        margin: 6px 0 0 0;
+        font-size: 13px;
         opacity: 0.9;
     }
 
@@ -95,13 +94,23 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Header grafico principale
-st.markdown("""
-<div class="main-header">
-    <h1>🖨️ Master Print Control - Industria 4.0</h1>
-    <p>Cruscotto direzionale avanzato per il controllo di costi, consumi reali, trend temporali e gestione flotte (FLORA F1 4T, Papyrus DGen G5 e Liyu)</p>
-</div>
-""", unsafe_allow_html=True)
+# Header grafico principale con Logo a destra
+col_h1, col_h2 = st.columns([4, 1])
+with col_h1:
+    st.markdown("""
+    <div class="main-header">
+        <h1>🖨️ Master Print Control - Industria 4.0</h1>
+        <p>Cruscotto direzionale avanzato per il controllo di costi, consumi reali, trend temporali e gestione flotte (Imprinting S.r.l.s.)</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_h2:
+    if os.path.exists("logo.png"):
+        st.image("logo.png", use_container_width=True)
+    elif os.path.exists("Firma Mail.png"):
+        st.image("Firma Mail.png", use_container_width=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
 
 # --- LETTURA AUTOMATICA DALLA CARTELLA DATI ---
 st.sidebar.header("📁 1. Sorgente Dati (Automatica)")
@@ -173,7 +182,7 @@ if not df.empty:
     if liyu_nome not in stampanti_disponibili:
         stampanti_disponibili.append(liyu_nome)
 
-    # Sidebar: Listini personalizzati per stampante (Costo Carta predefinito a 0.25 €/mq)
+    # Sidebar: Listini personalizzati con consumi reali medi e costo carta a 0.25 €/mq
     st.sidebar.divider()
     st.sidebar.header("⚙️ 2. Listini & Parametri 4.0")
     
@@ -183,19 +192,19 @@ if not df.empty:
         
         if 'flora' in nome_str:
             ink_default = 40.0
-            ml_default = 10.0
+            ml_default = 10.0   # Consumo reale medio mq Flora
             badge_40 = " [⚡ Industria 4.0]"
         elif 'papyrus' in nome_str or 'dgen' in nome_str:
             ink_default = 24.0
-            ml_default = 10.0  # Consumo reale ottimizzato Papyrus DGen G5
+            ml_default = 10.0   # Consumo reale medio mq Papyrus DGen G5
             badge_40 = " [⚡ Industria 4.0]"
         elif 'liyu' in nome_str:
-            ink_default = 24.0
-            ml_default = 12.0
+            ink_default = 40.0  # Richiesto 40€ al litro per Liyu
+            ml_default = 12.0   # Consumo reale medio mq Liyu
             badge_40 = " [⚡ Industria 4.0]"
         else:
-            ink_default = 55.0
-            ml_default = 12.0
+            ink_default = 40.0
+            ml_default = 11.0
             badge_40 = ""
             
         with st.sidebar.expander(f"🖨️ {stampante}{badge_40}", expanded=False):
@@ -215,7 +224,7 @@ if not df.empty:
                     
             costi_supporti = {}
             for supp in supporti_stampante:
-                # Costo base richiesto a 0.25 €/mq
+                # Costo carta predefinito a 0.25 €/mq
                 c_supp = st.number_input(f"Costo mq [{supp}]", min_value=0.0, value=0.25, step=0.05, key=f"supp_{stampante}_{supp}")
                 costi_supporti[supp] = c_supp
                 
@@ -225,7 +234,7 @@ if not df.empty:
                 'supporti': costi_supporti
             }
 
-    # Sidebar: Contatori Bobine con Avvisi Visivi
+    # Sidebar: Contatore Bobine / Rotoli
     st.sidebar.divider()
     st.sidebar.header("📦 Contatore Bobine / Rotoli")
     
@@ -284,7 +293,7 @@ if not df.empty:
     if stampante_selezionata:
         df = df[df['STAMPANTE'].isin(stampante_selezionata)]
 
-    # --- KPI GLOBALI IN ALTO (Responsive & Colorati) ---
+    # --- KPI GLOBALI IN ALTO ---
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Lavori Totali", f"{len(df):,}")
     c2.metric("Superficie", f"{df['AREA_TOTALE_mq'].sum():,.1f} mq")
@@ -341,9 +350,9 @@ if not df.empty:
                 if st.button("📅 Seleziona Oggi"):
                     oggi = datetime.now().date()
                     if min_d <= oggi <= max_d:
-                        st.session_state.isp_date_val = oggi
+                        st.session_state.isp_date_val = (oggi, oggi)
                     else:
-                        st.session_state.isp_date_val = max_d
+                        st.session_state.isp_date_val = (max_d, max_d)
                     st.rerun()
             with col_b2:
                 if st.button("🔄 Intervallo Totale"):
@@ -369,6 +378,9 @@ if not df.empty:
                 (df_isp['DATA_DI_STAMPA'].dt.date >= start_d) & 
                 (df_isp['DATA_DI_STAMPA'].dt.date <= end_d)
             ]
+        elif isinstance(intervallo_date, tuple) and len(intervallo_date) == 1:
+            d_val = intervallo_date[0]
+            df_isp = df_isp[df_isp['DATA_DI_STAMPA'].dt.date == d_val]
         elif hasattr(intervallo_date, 'year'):
             df_isp = df_isp[df_isp['DATA_DI_STAMPA'].dt.date == intervallo_date]
 
@@ -385,7 +397,6 @@ if not df.empty:
         ic5.metric("Costo Industriale", f"€ {df_isp['Costo_Produzione_Totale'].sum():,.2f}")
         st.markdown("---")
 
-        # Creazione etichetta univoca con la stampante visibile nella tendina
         if not df_isp.empty:
             df_isp['ETICHETTA_TENDINA'] = "[" + df_isp['STAMPANTE'].astype(str) + "] ➔ " + df_isp['LAVORI'].astype(str) + " (" + df_isp['DATA_DI_STAMPA'].dt.strftime('%d/%m/%Y %H:%M') + ")"
             lista_lavori_isp = df_isp['ETICHETTA_TENDINA'].tolist()
@@ -438,7 +449,7 @@ else:
 st.sidebar.markdown("---")
 st.sidebar.markdown(
     "<div style='text-align: center; color: #6b7280; font-size: 12px;'>"
-    "© 2026 <b>G. Ferrante</b><br>Tutti i diritti riservati."
+    "© 2026 <b>G. Ferrante</b> - Imprinting S.r.l.s.<br>Tutti i diritti riservati."
     "</div>",
     unsafe_allow_html=True
 )
