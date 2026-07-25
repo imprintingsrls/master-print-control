@@ -4,10 +4,11 @@ import plotly.express as px
 import os
 from datetime import datetime
 import io
+import base64
 
 # Configurazione della pagina
 st.set_page_config(
-    page_title="Master Print Control | Industria 4.0",
+    page_title="Master Print Control",
     page_icon="🖨️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -75,16 +76,24 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Header grafico principale con Brand Imprinting S.r.l.s.
-st.markdown("""
+# Gestione Logo in trasparenza sopra la barra blu
+logo_html = ""
+if os.path.exists("logo.png"):
+    with open("logo.png", "rb") as f:
+        encoded_logo = base64.b64encode(f.read()).decode()
+    logo_html = f'<img src="data:image/png;base64,{encoded_logo}" style="max-height: 55px; width: auto; background: transparent;" alt="Logo">'
+else:
+    logo_html = '<div style="font-weight: 800; font-size: 18px; color: white;">IMPRINTING</div>'
+
+# Header grafico principale
+st.markdown(f"""
 <div style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 20px 25px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);">
     <div>
-        <h1 style="margin: 0; font-size: 26px; font-weight: 700;">🖨️ Master Print Control - Industria 4.0</h1>
+        <h1 style="margin: 0; font-size: 26px; font-weight: 700;">🖨️ Master Print Control</h1>
         <p style="margin: 6px 0 0 0; font-size: 13px; opacity: 0.9;">Cruscotto direzionale avanzato per costi, consumi reali e gestione flotte</p>
     </div>
-    <div style="text-align: right; background: rgba(255, 255, 255, 0.95); padding: 10px 18px; border-radius: 8px; color: #1e293b;">
-        <div style="font-weight: 800; font-size: 18px; letter-spacing: 0.5px; color: #1e3a8a;">IMPRINTING</div>
-        <div style="font-size: 10px; color: #64748b; font-weight: 600; text-transform: uppercase;">soluzioni per la comunicazione</div>
+    <div style="text-align: right; background: transparent; padding: 5px;">
+        {logo_html}
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -120,7 +129,6 @@ else:
     df = pd.DataFrame()
 
 if not df.empty:
-    # Pulizia e formattazione dati rapida
     if 'AREA_TOTALE_mq' in df.columns:
         df['AREA_TOTALE_mq'] = df['AREA_TOTALE_mq'].astype(str).str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
     else:
@@ -153,17 +161,17 @@ if not df.empty:
 
     stampanti_disponibili = list(df['STAMPANTE'].dropna().unique())
     
-    flora_nome = "FLORA F1 4T [ID 4.0]"
+    flora_nome = "FLORA F1 4T"
     if flora_nome not in stampanti_disponibili:
         stampanti_disponibili.append(flora_nome)
         
-    liyu_nome = "Liyu [ID 4.0]"
+    liyu_nome = "LIYU PCTK Series"
     if liyu_nome not in stampanti_disponibili:
         stampanti_disponibili.append(liyu_nome)
 
-    # Sidebar: Listini personalizzati con consumi reali e supporti specifici
+    # Sidebar: Listini personalizzati
     st.sidebar.divider()
-    st.sidebar.header("⚙️ 2. Listini & Parametri 4.0")
+    st.sidebar.header("⚙️ 2. Listini & Parametri")
     
     costi_config = {}
     for stampante in stampanti_disponibili:
@@ -171,22 +179,18 @@ if not df.empty:
         
         if 'flora' in nome_str:
             ink_default = 40.0
-            ml_default = 10.0   # Consumo reale medio mq Flora
-            badge_40 = " [⚡ Industria 4.0]"
+            ml_default = 10.0
         elif 'papyrus' in nome_str or 'dgen' in nome_str:
             ink_default = 24.0
-            ml_default = 10.0   # Consumo reale medio mq Papyrus DGen G5
-            badge_40 = " [⚡ Industria 4.0]"
+            ml_default = 10.0
         elif 'liyu' in nome_str:
-            ink_default = 40.0  # Richiesto 40€ al litro per Liyu
-            ml_default = 12.0   # Consumo reale medio mq Liyu
-            badge_40 = " [⚡ Industria 4.0]"
+            ink_default = 40.0
+            ml_default = 12.0
         else:
             ink_default = 40.0
             ml_default = 11.0
-            badge_40 = ""
             
-        with st.sidebar.expander(f"🖨️ {stampante}{badge_40}", expanded=False):
+        with st.sidebar.expander(f"🖨️ {stampante}", expanded=False):
             costo_inchiostro = st.number_input(f"Inchiostro (€/Litro)", min_value=0.0, value=ink_default, step=1.0, key=f"ink_{stampante}")
             consumo_ml_mq = st.number_input(f"Consumo reale (ml/mq)", min_value=0.0, value=ml_default, step=0.5, key=f"ml_{stampante}")
             
@@ -194,7 +198,7 @@ if not df.empty:
                 supporti_stampante = ['Carta Blue Back']
                 st.sidebar.caption("📏 Bobina: 1.45 x 250 mt (362.5 mq)")
             elif 'liyu' in nome_str:
-                supporti_stampante = ['Banner', 'Vinile']  # Sostituito carta con Banner e Vinile
+                supporti_stampante = ['Banner', 'Vinile']
                 st.sidebar.caption("📏 Supporti dedicati Liyu")
             elif 'papyrus' in nome_str or 'dgen' in nome_str:
                 supporti_stampante = ['Carta Blue Back', 'Standard']
@@ -206,7 +210,6 @@ if not df.empty:
                     
             costi_supporti = {}
             for supp in supporti_stampante:
-                # Costi predefiniti specifici per Banner e Vinile su Liyu, o 0.25 per gli altri
                 default_c = 1.50 if supp == 'Banner' else (3.50 if supp == 'Vinile' else 0.25)
                 c_supp = st.number_input(f"Costo mq [{supp}]", min_value=0.0, value=default_c, step=0.05, key=f"supp_{stampante}_{supp}")
                 costi_supporti[supp] = c_supp
@@ -223,17 +226,17 @@ if not df.empty:
     
     mq_flora_tot = df[df['STAMPANTE'].str.contains('Flora|F1', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_flora = mq_flora_tot / 362.5 if 362.5 > 0 else 0
-    st.sidebar.markdown(f"**FLORA F1 4T [4.0]**")
+    st.sidebar.markdown(f"**FLORA F1 4T**")
     st.sidebar.caption(f"Totale: **{mq_flora_tot:,.1f} mq** (~{rotoli_flora:.2f} rotoli)")
 
     mq_papyrus_tot = df[df['STAMPANTE'].str.contains('Papyrus|DGen', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_papyrus = mq_papyrus_tot / 240.0 if 240.0 > 0 else 0
-    st.sidebar.markdown(f"**Papyrus DGen G5 [4.0]**")
+    st.sidebar.markdown(f"**Papyrus DGen G5**")
     st.sidebar.caption(f"Totale: **{mq_papyrus_tot:,.1f} mq** (~{rotoli_papyrus:.2f} rotoli)")
 
     mq_liyu_tot = df[df['STAMPANTE'].str.contains('Liyu', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_liyu = mq_liyu_tot / 240.0 if 240.0 > 0 else 0
-    st.sidebar.markdown(f"**Liyu [4.0]**")
+    st.sidebar.markdown(f"**LIYU PCTK Series**")
     st.sidebar.caption(f"Totale: **{mq_liyu_tot:,.1f} mq** (~{rotoli_liyu:.2f} rotoli)")
 
     # Sidebar: Filtri Globali Dashboard
@@ -325,28 +328,29 @@ if not df.empty:
             min_d = df['DATA_DI_STAMPA'].min().date() if not df['DATA_DI_STAMPA'].isna().all() else datetime.now().date()
             max_d = df['DATA_DI_STAMPA'].max().date() if not df['DATA_DI_STAMPA'].isna().all() else datetime.now().date()
             
+            # Espandiamo i limiti includendo oggi, risolvendo il blocco se oggi non ha log
+            oggi = datetime.now().date()
+            range_min = min(min_d, oggi)
+            range_max = max(max_d, oggi)
+            
             if 'isp_date_val' not in st.session_state:
-                st.session_state.isp_date_val = (min_d, max_d)
+                st.session_state.isp_date_val = (range_min, range_max)
 
             col_b1, col_b2 = st.columns(2)
             with col_b1:
                 if st.button("📅 Seleziona Oggi"):
-                    oggi = datetime.now().date()
-                    if min_d <= oggi <= max_d:
-                        st.session_state.isp_date_val = oggi
-                    else:
-                        st.session_state.isp_date_val = max_d
+                    st.session_state.isp_date_val = oggi
                     st.rerun()
             with col_b2:
                 if st.button("🔄 Intervallo Totale"):
-                    st.session_state.isp_date_val = (min_d, max_d)
+                    st.session_state.isp_date_val = (range_min, range_max)
                     st.rerun()
 
             intervallo_date = st.date_input(
                 "Seleziona il Giorno, Mese, Anno o l'Intervallo:",
                 value=st.session_state.isp_date_val,
-                min_value=min_d,
-                max_value=max_d,
+                min_value=range_min,
+                max_value=range_max,
                 format="DD/MM/YYYY",
                 key="isp_calendar"
             )
