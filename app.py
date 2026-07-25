@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import io
 
-# Configurazione della pagina
+# Configurazione della pagina (ottimizzata anche per mobile)
 st.set_page_config(
     page_title="Master Print Control | Industria 4.0",
     page_icon="🖨️",
@@ -13,18 +13,29 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Stile CSS moderno
+# --- STILE CSS DEFINITIVO PER LA LEGGIBILITÀ DEI KPI (SFONDO CHIARO E TESTO SCURO) ---
 st.markdown("""
 <style>
-    .stMetric {
-        background-color: #ffffff;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-        border-left: 4px solid #2563eb;
+    div[data-testid="stMetric"] {
+        background-color: #f8fafc !important;
+        padding: 15px !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        border-left: 4px solid #2563eb !important;
+    }
+    div[data-testid="stMetric"] label {
+        color: #4b5563 !important;
+        font-size: 14px !important;
+    }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: #1f2937 !important;
+        font-weight: 700 !important;
+        font-size: 24px !important;
     }
     .block-container {
-        padding-top: 2rem;
+        padding-top: 1.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -157,7 +168,7 @@ if not df.empty:
                 'supporti': costi_supporti
             }
 
-    # Sidebar: Contatori Bobine con Avvisi Visivi (Alerts)
+    # Sidebar: Contatori Bobine
     st.sidebar.divider()
     st.sidebar.header("📦 Contatore Bobine / Rotoli")
     
@@ -165,8 +176,6 @@ if not df.empty:
     rotoli_flora = mq_flora_tot / 362.5 if 362.5 > 0 else 0
     st.sidebar.markdown(f"**FLORA F1 4T [4.0]**")
     st.sidebar.caption(f"Totale stampato: **{mq_flora_tot:,.1f} mq** (~{rotoli_flora:.2f} rotoli da 250mt)")
-    if rotoli_flora > 10:
-        st.sidebar.info("💡 Suggerimento: Alto volume accumulato su Flora.")
 
     mq_papyrus_tot = df[df['STAMPANTE'].str.contains('Papyrus', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_papyrus = mq_papyrus_tot / 240.0 if 240.0 > 0 else 0
@@ -196,7 +205,7 @@ if not df.empty:
         if stato_selezionato:
             df = df[df['STATO'].isin(stato_selezionato)]
 
-    # --- CALCOLO VETTORIZZATO ULTRA-VELOCE ---
+    # --- CALCOLO VETTORIZZATO ---
     ink_dict = {stp: cfg['inchiostro'] for stp, cfg in costi_config.items()}
     ml_dict = {stp: cfg['consumo_ml'] for stp, cfg in costi_config.items()}
     
@@ -218,7 +227,7 @@ if not df.empty:
     if stampante_selezionata:
         df = df[df['STAMPANTE'].isin(stampante_selezionata)]
 
-    # --- KPI GLOBALI IN ALTO ---
+    # --- KPI GLOBALI IN ALTO (Responsive per Mobile) ---
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Lavori Totali", f"{len(df):,}")
     c2.metric("Superficie", f"{df['AREA_TOTALE_mq'].sum():,.1f} mq")
@@ -363,7 +372,7 @@ else:
 st.sidebar.markdown("---")
 st.sidebar.markdown(
     "<div style='text-align: center; color: #6b7280; font-size: 12px;'>"
-    "© 2026 Master Print Control<br>Tutti i diritti riservati."
+    "© 2026 <b>G. Ferrante</b><br>Tutti i diritti riservati."
     "</div>",
     unsafe_allow_html=True
 )
