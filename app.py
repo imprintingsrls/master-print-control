@@ -77,11 +77,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Gestione Logo in trasparenza sopra la barra blu
+import glob
+import base64
+import os
+
+# Ricerca flessibile del file logo (gestisce maiuscole/minuscole automaticamente)
+file_trovati = glob.glob("[Ll][Oo][Gg][Oo].[pP][nN][gG]")
+
 logo_html = ""
-if os.path.exists("logo.png"):
-    with open("logo.png", "rb") as f:
+if file_trovati:
+    percorso_logo = file_trovati[0]
+    with open(percorso_logo, "rb") as f:
         encoded_logo = base64.b64encode(f.read()).decode()
-    logo_html = f'<img src="data:image/png;base64,{encoded_logo}" style="max-height: 55px; width: auto; background: transparent;" alt="Logo">'
+    # Forziamo un'altezza ottimale per la struttura verticale del tuo logo
+    logo_html = f'<img src="data:image/png;base64,{encoded_logo}" style="max-height: 65px; width: auto; background: transparent; display: block;" alt="Logo Imprinting">'
 else:
     logo_html = '<div style="font-weight: 800; font-size: 18px; color: white;">IMPRINTING</div>'
 
