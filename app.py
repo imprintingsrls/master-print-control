@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import io
 
-# Configurazione della pagina (ottimizzata anche per mobile)
+# Configurazione della pagina
 st.set_page_config(
     page_title="Master Print Control | Industria 4.0",
     page_icon="🖨️",
@@ -13,32 +13,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- STILE CSS MODERNO, COLORATO E USER-FRIENDLY ---
+# --- STILE CSS MODERNO E USER-FRIENDLY ---
 st.markdown("""
 <style>
     .stApp {
         background-color: #f8fafc;
     }
     
-    /* Intestazione principale moderna e colorata */
-    .main-header {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 22px;
-        border-radius: 12px;
-        color: white;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
-    }
-    .main-header h1 {
-        margin: 0;
-        font-size: 26px;
-        font-weight: 700;
-    }
-    .main-header p {
-        margin: 6px 0 0 0;
-        font-size: 13px;
-        opacity: 0.9;
-    }
-
     /* Riquadri KPI moderni con effetto card */
     div[data-testid="stMetric"] {
         background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
@@ -68,7 +49,7 @@ st.markdown("""
         font-size: 24px !important;
     }
 
-    /* Tabs stilizzate e colorate */
+    /* Tabs stilizzate */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background-color: #e2e8f0;
@@ -94,21 +75,19 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Header grafico principale con Logo a destra
-col_h1, col_h2 = st.columns([4, 1])
-with col_h1:
-    st.markdown("""
-    <div class="main-header">
-        <h1>🖨️ Master Print Control - Industria 4.0</h1>
-        <p>Cruscotto direzionale avanzato per il controllo di costi, consumi reali, trend temporali e gestione flotte (Imprinting S.r.l.s.)</p>
+# Header grafico principale con Brand Imprinting S.r.l.s.
+st.markdown("""
+<div style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 20px 25px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);">
+    <div>
+        <h1 style="margin: 0; font-size: 26px; font-weight: 700;">🖨️ Master Print Control - Industria 4.0</h1>
+        <p style="margin: 6px 0 0 0; font-size: 13px; opacity: 0.9;">Cruscotto direzionale avanzato per costi, consumi reali e gestione flotte</p>
     </div>
-    """, unsafe_allow_html=True)
-
-with col_h2:
-    if os.path.exists("logo.png"):
-        st.image("logo.png", use_container_width=True)
-    elif os.path.exists("Firma Mail.png"):
-        st.image("Firma Mail.png", use_container_width=True)
+    <div style="text-align: right; background: rgba(255, 255, 255, 0.95); padding: 10px 18px; border-radius: 8px; color: #1e293b;">
+        <div style="font-weight: 800; font-size: 18px; letter-spacing: 0.5px; color: #1e3a8a;">IMPRINTING</div>
+        <div style="font-size: 10px; color: #64748b; font-weight: 600; text-transform: uppercase;">soluzioni per la comunicazione</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -182,7 +161,7 @@ if not df.empty:
     if liyu_nome not in stampanti_disponibili:
         stampanti_disponibili.append(liyu_nome)
 
-    # Sidebar: Listini personalizzati con consumi reali medi e costo carta a 0.25 €/mq
+    # Sidebar: Listini personalizzati con consumi reali e supporti specifici
     st.sidebar.divider()
     st.sidebar.header("⚙️ 2. Listini & Parametri 4.0")
     
@@ -214,18 +193,22 @@ if not df.empty:
             if 'flora' in nome_str:
                 supporti_stampante = ['Carta Blue Back']
                 st.sidebar.caption("📏 Bobina: 1.45 x 250 mt (362.5 mq)")
-            elif 'papyrus' in nome_str or 'liyu' in nome_str or 'dgen' in nome_str:
+            elif 'liyu' in nome_str:
+                supporti_stampante = ['Banner', 'Vinile']  # Sostituito carta con Banner e Vinile
+                st.sidebar.caption("📏 Supporti dedicati Liyu")
+            elif 'papyrus' in nome_str or 'dgen' in nome_str:
                 supporti_stampante = ['Carta Blue Back', 'Standard']
                 st.sidebar.caption("📏 Bobina standard")
             else:
                 supporti_stampante = df[df['STAMPANTE'] == stampante]['SUPPORTO'].dropna().unique()
                 if len(supporti_stampante) == 0:
-                    supporti_stampante = ['Carta Blue Back', 'Standard']
+                    supporti_stampante = ['Standard']
                     
             costi_supporti = {}
             for supp in supporti_stampante:
-                # Costo carta predefinito a 0.25 €/mq
-                c_supp = st.number_input(f"Costo mq [{supp}]", min_value=0.0, value=0.25, step=0.05, key=f"supp_{stampante}_{supp}")
+                # Costi predefiniti specifici per Banner e Vinile su Liyu, o 0.25 per gli altri
+                default_c = 1.50 if supp == 'Banner' else (3.50 if supp == 'Vinile' else 0.25)
+                c_supp = st.number_input(f"Costo mq [{supp}]", min_value=0.0, value=default_c, step=0.05, key=f"supp_{stampante}_{supp}")
                 costi_supporti[supp] = c_supp
                 
             costi_config[stampante] = {
@@ -350,9 +333,9 @@ if not df.empty:
                 if st.button("📅 Seleziona Oggi"):
                     oggi = datetime.now().date()
                     if min_d <= oggi <= max_d:
-                        st.session_state.isp_date_val = (oggi, oggi)
+                        st.session_state.isp_date_val = oggi
                     else:
-                        st.session_state.isp_date_val = (max_d, max_d)
+                        st.session_state.isp_date_val = max_d
                     st.rerun()
             with col_b2:
                 if st.button("🔄 Intervallo Totale"):
