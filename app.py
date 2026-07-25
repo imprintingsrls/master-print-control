@@ -13,36 +13,95 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- STILE CSS DEFINITIVO PER LA LEGGIBILITÀ DEI KPI (SFONDO CHIARO E TESTO SCURO) ---
+# --- STILE CSS MODERNO, COLORATO E USER-FRIENDLY ---
 st.markdown("""
 <style>
+    .stApp {
+        background-color: #f8fafc;
+    }
+    
+    /* Intestazione principale moderna e colorata */
+    .main-header {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        padding: 25px;
+        border-radius: 12px;
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+    }
+    .main-header h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+    }
+    .main-header p {
+        margin: 8px 0 0 0;
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    /* Riquadri KPI moderni con effetto card */
     div[data-testid="stMetric"] {
-        background-color: #f8fafc !important;
-        padding: 15px !important;
-        border-radius: 10px !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
-        border-left: 4px solid #2563eb !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+        padding: 18px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+        border-left: 5px solid #3b82f6 !important;
+        border-top: 1px solid #e2e8f0;
+        border-right: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    div[data-testid="stMetric"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.08) !important;
     }
     div[data-testid="stMetric"] label {
-        color: #4b5563 !important;
-        font-size: 14px !important;
+        color: #475569 !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     div[data-testid="stMetric"] [data-testid="stMetricValue"] {
-        color: #1f2937 !important;
-        font-weight: 700 !important;
+        color: #0f172a !important;
+        font-weight: 800 !important;
         font-size: 24px !important;
     }
+
+    /* Tabs stilizzate e colorate */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: #e2e8f0;
+        padding: 6px;
+        border-radius: 10px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        height: 40px;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #475569;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #3b82f6 !important;
+        color: white !important;
+    }
+
     .block-container {
         padding-top: 1.5rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🖨️ Master Print Control - Industria 4.0 (Enterprise)")
-st.markdown("Cruscotto direzionale avanzato per il controllo dei costi, consumi, trend temporali e gestione linee FLORA F1 4T, Papyrus e Liyu.")
-st.divider()
+# Header grafico principale
+st.markdown("""
+<div class="main-header">
+    <h1>🖨️ Master Print Control - Industria 4.0</h1>
+    <p>Cruscotto direzionale avanzato per il controllo di costi, consumi reali, trend temporali e gestione flotte (FLORA F1 4T, Papyrus DGen G5 e Liyu)</p>
+</div>
+""", unsafe_allow_html=True)
 
 # --- LETTURA AUTOMATICA DALLA CARTELLA DATI ---
 st.sidebar.header("📁 1. Sorgente Dati (Automatica)")
@@ -114,7 +173,7 @@ if not df.empty:
     if liyu_nome not in stampanti_disponibili:
         stampanti_disponibili.append(liyu_nome)
 
-    # Sidebar: Listini personalizzati per stampante
+    # Sidebar: Listini personalizzati per stampante (Costo Carta predefinito a 0.25 €/mq)
     st.sidebar.divider()
     st.sidebar.header("⚙️ 2. Listini & Parametri 4.0")
     
@@ -124,26 +183,31 @@ if not df.empty:
         
         if 'flora' in nome_str:
             ink_default = 40.0
+            ml_default = 10.0
             badge_40 = " [⚡ Industria 4.0]"
-        elif 'papyrus' in nome_str or 'liyu' in nome_str:
+        elif 'papyrus' in nome_str or 'dgen' in nome_str:
             ink_default = 24.0
+            ml_default = 10.0  # Consumo reale ottimizzato Papyrus DGen G5
+            badge_40 = " [⚡ Industria 4.0]"
+        elif 'liyu' in nome_str:
+            ink_default = 24.0
+            ml_default = 12.0
             badge_40 = " [⚡ Industria 4.0]"
         else:
             ink_default = 55.0
+            ml_default = 12.0
             badge_40 = ""
             
         with st.sidebar.expander(f"🖨️ {stampante}{badge_40}", expanded=False):
             costo_inchiostro = st.number_input(f"Inchiostro (€/Litro)", min_value=0.0, value=ink_default, step=1.0, key=f"ink_{stampante}")
-            
-            ml_default = 10.0 if 'flora' in nome_str else 12.0
-            consumo_ml_mq = st.number_input(f"Consumo (ml/mq)", min_value=0.0, value=ml_default, step=1.0, key=f"ml_{stampante}")
+            consumo_ml_mq = st.number_input(f"Consumo reale (ml/mq)", min_value=0.0, value=ml_default, step=0.5, key=f"ml_{stampante}")
             
             if 'flora' in nome_str:
                 supporti_stampante = ['Carta Blue Back']
                 st.sidebar.caption("📏 Bobina: 1.45 x 250 mt (362.5 mq)")
-            elif 'papyrus' in nome_str or 'liyu' in nome_str:
+            elif 'papyrus' in nome_str or 'liyu' in nome_str or 'dgen' in nome_str:
                 supporti_stampante = ['Carta Blue Back', 'Standard']
-                st.sidebar.caption("📏 Bobina standard Blue Back")
+                st.sidebar.caption("📏 Bobina standard")
             else:
                 supporti_stampante = df[df['STAMPANTE'] == stampante]['SUPPORTO'].dropna().unique()
                 if len(supporti_stampante) == 0:
@@ -151,15 +215,8 @@ if not df.empty:
                     
             costi_supporti = {}
             for supp in supporti_stampante:
-                supp_str = str(supp).lower()
-                if 'blue back' in supp_str or 'blueback' in supp_str:
-                    default_cost = 1.80
-                elif 'vinile' in supp_str or 'adesivo' in supp_str:
-                    default_cost = 3.50
-                else:
-                    default_cost = 2.00
-                    
-                c_supp = st.number_input(f"Costo mq [{supp}]", min_value=0.0, value=default_cost, step=0.1, key=f"supp_{stampante}_{supp}")
+                # Costo base richiesto a 0.25 €/mq
+                c_supp = st.number_input(f"Costo mq [{supp}]", min_value=0.0, value=0.25, step=0.05, key=f"supp_{stampante}_{supp}")
                 costi_supporti[supp] = c_supp
                 
             costi_config[stampante] = {
@@ -168,24 +225,24 @@ if not df.empty:
                 'supporti': costi_supporti
             }
 
-    # Sidebar: Contatori Bobine
+    # Sidebar: Contatori Bobine con Avvisi Visivi
     st.sidebar.divider()
     st.sidebar.header("📦 Contatore Bobine / Rotoli")
     
     mq_flora_tot = df[df['STAMPANTE'].str.contains('Flora|F1', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_flora = mq_flora_tot / 362.5 if 362.5 > 0 else 0
     st.sidebar.markdown(f"**FLORA F1 4T [4.0]**")
-    st.sidebar.caption(f"Totale stampato: **{mq_flora_tot:,.1f} mq** (~{rotoli_flora:.2f} rotoli da 250mt)")
+    st.sidebar.caption(f"Totale: **{mq_flora_tot:,.1f} mq** (~{rotoli_flora:.2f} rotoli)")
 
-    mq_papyrus_tot = df[df['STAMPANTE'].str.contains('Papyrus', case=False, na=False)]['AREA_TOTALE_mq'].sum()
+    mq_papyrus_tot = df[df['STAMPANTE'].str.contains('Papyrus|DGen', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_papyrus = mq_papyrus_tot / 240.0 if 240.0 > 0 else 0
-    st.sidebar.markdown(f"**Papyrus [4.0]**")
-    st.sidebar.caption(f"Totale stampato: **{mq_papyrus_tot:,.1f} mq** (~{rotoli_papyrus:.2f} rotoli stimati)")
+    st.sidebar.markdown(f"**Papyrus DGen G5 [4.0]**")
+    st.sidebar.caption(f"Totale: **{mq_papyrus_tot:,.1f} mq** (~{rotoli_papyrus:.2f} rotoli)")
 
     mq_liyu_tot = df[df['STAMPANTE'].str.contains('Liyu', case=False, na=False)]['AREA_TOTALE_mq'].sum()
     rotoli_liyu = mq_liyu_tot / 240.0 if 240.0 > 0 else 0
     st.sidebar.markdown(f"**Liyu [4.0]**")
-    st.sidebar.caption(f"Totale stampato: **{mq_liyu_tot:,.1f} mq** (~{rotoli_liyu:.2f} rotoli stimati)")
+    st.sidebar.caption(f"Totale: **{mq_liyu_tot:,.1f} mq** (~{rotoli_liyu:.2f} rotoli)")
 
     # Sidebar: Filtri Globali Dashboard
     st.sidebar.divider()
@@ -217,7 +274,7 @@ if not df.empty:
     df['Inchiostro_Litro'] = df['STAMPANTE'].map(ink_dict).fillna(40.0)
     df['Consumo_ml_mq'] = df['STAMPANTE'].map(ml_dict).fillna(10.0)
     
-    df['Costo_Mq_Carta'] = pd.MultiIndex.from_arrays([df['STAMPANTE'], df['SUPPORTO']]).map(costi_carta_dict).fillna(1.80)
+    df['Costo_Mq_Carta'] = pd.MultiIndex.from_arrays([df['STAMPANTE'], df['SUPPORTO']]).map(costi_carta_dict).fillna(0.25)
 
     df['Costo_Carta_Totale'] = df['AREA_TOTALE_mq'] * df['Costo_Mq_Carta']
     df['Inchiostro_Stimato_ml'] = df['AREA_TOTALE_mq'] * df['Consumo_ml_mq']
@@ -227,7 +284,7 @@ if not df.empty:
     if stampante_selezionata:
         df = df[df['STAMPANTE'].isin(stampante_selezionata)]
 
-    # --- KPI GLOBALI IN ALTO (Responsive per Mobile) ---
+    # --- KPI GLOBALI IN ALTO (Responsive & Colorati) ---
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Lavori Totali", f"{len(df):,}")
     c2.metric("Superficie", f"{df['AREA_TOTALE_mq'].sum():,.1f} mq")
@@ -248,9 +305,11 @@ if not df.empty:
         col_g1, col_g2 = st.columns(2)
         with col_g1:
             fig_costi = px.bar(df, x='STAMPANTE', y='Costo_Produzione_Totale', color='STAMPANTE', title="Costo di Produzione per Macchina (€)", text_auto='.2f')
+            fig_costi.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_costi, use_container_width=True)
         with col_g2:
             fig_sup = px.pie(df, names='SUPPORTO', values='AREA_TOTALE_mq', hole=0.4, title="Ripartizione Superficie per Supporto")
+            fig_sup.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_sup, use_container_width=True)
 
         st.divider()
@@ -259,12 +318,13 @@ if not df.empty:
             df_trend = df.groupby(['ANNO', 'MESE_NUM', 'MESE'], as_index=False)['AREA_TOTALE_mq'].sum().sort_values(['ANNO', 'MESE_NUM'])
             if not df_trend.empty:
                 fig_trend = px.line(df_trend, x='MESE', y='AREA_TOTALE_mq', color='ANNO', markers=True, title="Andamento Mensile Metri Quadri Stampati", labels={'MESE': 'Mese', 'AREA_TOTALE_mq': 'Superficie Totale (mq)'})
+                fig_trend.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)')
                 st.plotly_chart(fig_trend, use_container_width=True)
             else:
                 st.info("Dati temporali insufficienti per generare il trend mensile.")
 
     with tab_ispezione:
-        st.subheader("🔎 Ricerca Avanzata Lavoro (Macchina, Calendario e Testo)")
+        st.subheader("🔎 Ricerca Avanzata Lavoro (con Dettaglio Stampante)")
         
         col_i1, col_i2 = st.columns(2)
         with col_i1:
@@ -325,13 +385,19 @@ if not df.empty:
         ic5.metric("Costo Industriale", f"€ {df_isp['Costo_Produzione_Totale'].sum():,.2f}")
         st.markdown("---")
 
-        lista_lavori_isp = df_isp['LAVORI'].dropna().unique().tolist()
-        lavoro_cercato = st.selectbox("Seleziona il lavoro specifico tra quelli filtrati:", options=["-- Seleziona --"] + lista_lavori_isp, key="isp_lavoro_select")
+        # Creazione etichetta univoca con la stampante visibile nella tendina
+        if not df_isp.empty:
+            df_isp['ETICHETTA_TENDINA'] = "[" + df_isp['STAMPANTE'].astype(str) + "] ➔ " + df_isp['LAVORI'].astype(str) + " (" + df_isp['DATA_DI_STAMPA'].dt.strftime('%d/%m/%Y %H:%M') + ")"
+            lista_lavori_isp = df_isp['ETICHETTA_TENDINA'].tolist()
+        else:
+            lista_lavori_isp = []
+
+        lavoro_cercato = st.selectbox("Seleziona il lavoro specifico (con indicazione della macchina):", options=["-- Seleziona --"] + lista_lavori_isp, key="isp_lavoro_select")
         
         if lavoro_cercato != "-- Seleziona --":
-            dettaglio_lavoro = df_isp[df_isp['LAVORI'] == lavoro_cercato]
+            dettaglio_lavoro = df_isp[df_isp['ETICHETTA_TENDINA'] == lavoro_cercato]
             for idx, row in dettaglio_lavoro.iterrows():
-                st.info(f"Dettagli tecnici per il lavoro: **{row.get('LAVORI')}**")
+                st.info(f"Dettagli tecnici per il lavoro selezionato sulla stampante: **{row.get('STAMPANTE')}**")
                 d1, d2, d3, d4, d5, d6 = st.columns(6)
                 d1.metric("Data", str(row.get('DATA_DI_STAMPA', 'N/D'))[:16])
                 d2.metric("Stampante", str(row.get('STAMPANTE', 'N/D')))
